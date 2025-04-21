@@ -1,49 +1,75 @@
-#Nextflow for GATK calling varaints from whole-exome sequencing (WES)
-#Directory Structure Example
+🧬 Variant Calling Pipeline with GATK & VEP Annotation
+This Nextflow pipeline performs variant calling from paired-end FASTQ files, including quality control (FastQC), alignment (BWA), sorting (samtools), variant calling (GATK HaplotypeCaller), and annotation (VEP).
 
+📁 Project Structure
 project/
-│
-├── WES_with_annotation.nf
-├── data/
-│   ├── sample_R1.fastq.gz
-│   └── sample_R2.fastq.gz
-├── ref.fa
-├── targets.bed
-├── vep_cache/   # This is where the VEP cache files will be stored
-└── nextflow.config
-
-#Explainations
-Reference Genome: Make sure the reference genome (ref.fa) is indexed
-fastqc: Performs quality control on the paired-end FASTQ files.
-
-bwa_align: Aligns the reads to the reference genome using BWA.
-
-samtools_sort: Sorts the resulting SAM file into a BAM file using Samtools.
-
-gatk_variant_calling: Uses GATK to perform variant calling on the sorted BAM file. i.e. MarkDuplicates, HaplotypeCaller.
-
-vep_annotation: Annotates the called variants using VEP (Variant Effect Predictor) based on the provided annotation GTF file.
-
-#The params block specifies the file locations for the input data, the reference genome, the annotation, and the output directory.
-
-#Run the pipeline with Nextflow
-nextflow run WES_with_annotation.nf
+├── variant_pipeline.nf         # Main Nextflow pipeline
+├── nextflow.config             # (Optional) Nextflow configuration file
+├── Dockerfile                  # (Optional) Docker container with required tools
+├── README.md                   # You're reading it!
+├── RawData/                    # Input FASTQ files
+│   ├── sample1_1.fq.gz
+│   └── sample1_2.fq.gz
+└── Ref/                        # Reference files
+    ├── ref.fa                  # Reference genome
+    └── ref.gtf                 # Annotation file
 
 
-#If want to build the Docker Image
-#In the same directory with the Dockerfile, run the following command line
-docker build -t nextflow-wes-pipeline .
+🚀 How to Run
+1. Install Nextflow
+curl -s https://get.nextflow.io | bash
 
-#Run the Nextflow pipeline in Docker
-docker run --rm -v /path/to/your/workdir:/data -w /data nextflow-wes-pipeline nextflow run WES_with_annotation.nf
+2. Clone this repository
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
 
-#Explanation:
+3. Prepare Inputs
+Place paired FASTQ files in the RawData/ folder.
 
---rm: Removes the container once it’s stopped.
+Name format should be: sampleID_1.fq.gz and sampleID_2.fq.gz
 
--v /path/to/your/workdir:/data: Mounts your local directory (where the WES_with_annotation.nf file and your data are located) to the /data directory inside the container.
+Put reference genome (ref.fa) and annotation file (ref.gtf) in the Ref/ folder.
 
--w /data: Sets the working directory to /data inside the container.
+4. Run the Pipeline
+nextflow run GATK_variant.nf
+
+5. Or run the pipeline with Docker:
+nextflow run Strelka2_Somatic_varaint.nf -with-docker my-ngs-pipeline
+
+
+
+📦 Pipeline Steps
+
+Step	Tool	Output
+1. Quality Check	FastQC	sampleID/fastqc
+2. Alignment	BWA	sampleID/bwa/sampleID.sam
+3. Sort & Convert	samtools	sampleID/bwa/sampleID.sorted.bam
+4. Variant Call	GATK	sampleID/varaints.vcf
+5. Annotation	Ensembl VEP	sampleID/annotated_varaints.vcf
+
+🧪 Example Output
+Each sample will have its results organized under its own folder, for example:
+
+sample1/
+├── fastqc/
+├── bwa/
+│   ├── sample1.sam
+│   └── sample1.sorted.bam
+├── varaints.vcf
+└── annotated_varaints.vcf
+
+❗ Known Issues
+Make sure ref.fa is indexed if required by tools (e.g., samtools faidx, bwa index, gatk CreateSequenceDictionary)
+
+Typo alert: check filenames like varaints.vcf (should be variants.vcf) in script output
+
+
+⚙️ Configuration
+If you want to change resource usage (e.g., memory, CPU, time limit), edit the nextflow.config file.
+
+
+
+
 
 
 
