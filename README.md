@@ -50,13 +50,14 @@ Step	Tool	Output
 # Example Output
 Each sample will have its results organized under its own folder, for example:
 
-sample1/
-├── fastqc/
-├── bwa/
-│   ├── sample1.sam
-│   └── sample1.sorted.bam
-├── varaints.vcf
-└── annotated_varaints.vcf
+sample1：
+fastqc/
+bwa/
+sample1.bam
+sample1.sorted.bam
+sample1.sam
+varaints.vcf
+annotated_varaints.vcf
 
 # Known Issues
 Make sure ref.fa is indexed if required by tools (e.g., samtools faidx, bwa index, gatk CreateSequenceDictionary)
