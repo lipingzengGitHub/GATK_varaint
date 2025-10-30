@@ -47,7 +47,7 @@ Step	Tool	Output
 4. Variant Call	GATK	sampleID/varaints.vcf
 5. Annotation	Ensembl VEP	sampleID/annotated_varaints.vcf
 
-### Example Output
+# Example Output
 Each sample will have its results organized under its own folder, for example:
 
 sample1/
@@ -58,7 +58,7 @@ sample1/
 ├── varaints.vcf
 └── annotated_varaints.vcf
 
-### Known Issues
+# Known Issues
 Make sure ref.fa is indexed if required by tools (e.g., samtools faidx, bwa index, gatk CreateSequenceDictionary)
 
 Typo alert: check filenames like varaints.vcf (should be variants.vcf) in script output
