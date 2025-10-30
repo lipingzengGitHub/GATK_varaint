@@ -51,7 +51,7 @@ Step	Tool	Output
 Each sample will have its results organized under its own folder, for example:
 
 sample1：
-fastqc/
+fastqc/,
 bwa/
 sample1.bam
 sample1.sorted.bam
