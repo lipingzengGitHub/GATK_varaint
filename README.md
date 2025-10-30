@@ -1,7 +1,7 @@
-🧬 Variant Calling Pipeline with GATK & VEP Annotation
+### Variant Calling Pipeline with GATK & VEP Annotation
 This Nextflow pipeline performs variant calling from paired-end FASTQ files, including quality control (FastQC), alignment (BWA), sorting (samtools), variant calling (GATK HaplotypeCaller), and annotation (VEP).
 
-📁 Project Structure
+### Project Structure
 project/
 ├── variant_pipeline.nf         # Main Nextflow pipeline
 ├── nextflow.config             # (Optional) Nextflow configuration file
@@ -15,7 +15,7 @@ project/
     └── ref.gtf                 # Annotation file
 
 
-🚀 How to Run
+### How to Run
 1. Install Nextflow
 curl -s https://get.nextflow.io | bash
 
@@ -38,7 +38,7 @@ nextflow run Strelka2_Somatic_varaint.nf -with-docker my-ngs-pipeline
 
 
 
-📦 Pipeline Steps
+### Pipeline Steps
 
 Step	Tool	Output
 1. Quality Check	FastQC	sampleID/fastqc
@@ -47,7 +47,7 @@ Step	Tool	Output
 4. Variant Call	GATK	sampleID/varaints.vcf
 5. Annotation	Ensembl VEP	sampleID/annotated_varaints.vcf
 
-🧪 Example Output
+### Example Output
 Each sample will have its results organized under its own folder, for example:
 
 sample1/
@@ -58,13 +58,13 @@ sample1/
 ├── varaints.vcf
 └── annotated_varaints.vcf
 
-❗ Known Issues
+### Known Issues
 Make sure ref.fa is indexed if required by tools (e.g., samtools faidx, bwa index, gatk CreateSequenceDictionary)
 
 Typo alert: check filenames like varaints.vcf (should be variants.vcf) in script output
 
 
-⚙️ Configuration
+### Configuration
 If you want to change resource usage (e.g., memory, CPU, time limit), edit the nextflow.config file.
 
 
